@@ -53,6 +53,36 @@
 
 
 
+-(Boolean)horario_atencion_ChatLP{
+    NSDate *date = [[NSDate alloc] init];
+    NSString *MexicoDF = @"America/Mexico_City";
+    
+    NSTimeZone *timeZone = [[NSTimeZone alloc] initWithName: MexicoDF];
+    
+    NSDateFormatter *dateFormatterFull = [[NSDateFormatter alloc]init];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    NSDateFormatter *dateFormatterDay = [[NSDateFormatter alloc]init];
+    
+    [dateFormatterFull setTimeZone: timeZone];
+    [dateFormatter setTimeZone:timeZone];
+    [dateFormatterDay setTimeZone:timeZone];
+    
+    dateFormatterFull.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    
+    [dateFormatterFull setDateFormat:@"dd/MM/yyy HH:mm:ss"];
+    [dateFormatter setDateFormat:@"dd/MM/yyy"];
+    [dateFormatterDay setDateFormat:@"EEE"];
+    
+    NSString *stime_now = [dateFormatterFull stringFromDate:date];
+    NSString *stime_08 = [[dateFormatter stringFromDate:date] stringByAppendingString:@" 08:00:00"];
+    NSString *stime_23 = [[dateFormatter stringFromDate:date] stringByAppendingString:@" 23:00:00"];
+    
+    //TRUE dentro del Horario
+    return ([stime_now compare:stime_08] == NSOrderedDescending  &&  [stime_now compare:stime_23] == NSOrderedAscending);
+}
+
+
+
 
 
 - (void)didReceiveMemoryWarning {
